@@ -2,7 +2,7 @@ from django_countries.serializer_fields import CountryField
 from rest_framework import serializers
 from core.models import (
     Address, Item, Order, OrderItem, Coupon, Variation, ItemVariation,
-    Payment
+    Payment, Verification, Category
 )
 
 
@@ -207,4 +207,25 @@ class PaymentSerializer(serializers.ModelSerializer):
             'id',
             'amount',
             'timestamp'
+        )
+
+
+class VerificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Verification
+        fields = (
+            'id',
+            'country_code',
+            'phone_number',
+            'token',
+            'is_verified'
+        )
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = (
+            'id',
+            'category_name'
         )

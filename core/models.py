@@ -178,11 +178,13 @@ class Address(models.Model):
 
 
 class Payment(models.Model):
-    stripe_charge_id = models.CharField(max_length=50)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.SET_NULL, blank=True, null=True)
-    amount = models.FloatField()
+    productinfo = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, related_name='productinfo')
+    amount = models.FloatField(null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    order_id = models.CharField(max_length=100, default='0', null=True)
+    razor_orderid = models.CharField(max_length=100, default='0', null=True)
 
     def __str__(self):
         return self.user.username
@@ -205,6 +207,22 @@ class Refund(models.Model):
     def __str__(self):
         return f"{self.pk}"
 
+
+class Verification(models.Model):
+    country_code = models.CharField(max_length=3)
+    phone_number = models.CharField(max_length=6)
+    token = models.CharField(max_length=6)
+    is_verified = models.BooleanField()
+
+    def __str__(self):
+        return self.phone_number
+
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.category_name
 
 def userprofile_receiver(sender, instance, created, *args, **kwargs):
     if created:

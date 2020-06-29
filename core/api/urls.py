@@ -14,7 +14,10 @@ from .views import (
     AddressUpdateView,
     AddressDeleteView,
     OrderItemDeleteView,
-    PaymentListView
+    PaymentListView,
+    PhoneVerificationView,
+    TokenValidationView,
+    CategoryListView
 )
 
 urlpatterns = [
@@ -37,5 +40,8 @@ urlpatterns = [
     path('order-item/update-quantity/',
          OrderQuantityUpdateView.as_view(), name='order-item-update-quantity'),
     path('payments/', PaymentListView.as_view(), name='payment-list'),
+    path('verification/', PhoneVerificationView.as_view(), name='verification'),
+    path('verification/token/', TokenValidationView.as_view(), name='verification-token'),
+    path('category/', CategoryListView.as_view(), name='category-list'),
 
 ]
